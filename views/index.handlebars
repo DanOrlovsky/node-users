@@ -1,3 +1,5 @@
+
+{{#unless user}}
 <div class="row">
     <div class="container">
         <div class="jumbotron">
@@ -14,3 +16,8 @@
         </div>
     </div>
 </div>
+{{/unless}}
+
+{{#if user}}
+    Welcome back, {{ user.email }}!
+{{/if}}

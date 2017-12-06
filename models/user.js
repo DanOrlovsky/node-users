@@ -1,10 +1,45 @@
-module.exports = function(sequelize, DataTypes) {
-    var User = sequelize.define("User", {
-        email: DataTypes.STRING,
-        firstName: DataTypes.STRING,
-        lastName: DataTypes.STRING,
-        password: DataTypes.STRING,
-    });
-    return User;
+var role = require('./role');
 
+module.exports = function(sequelize, DT) {
+    var User = sequelize.define("User", {
+        id: {
+            autoIncrement: true,
+            primaryKey: true,
+            type: DT.INTEGER,
+        },
+        email: {
+            type: DT.STRING,
+            validate: {
+                isEmail: true,
+            },
+        },
+        password: {
+            type: DT.STRING,
+            allowNull: false,
+        },
+        firstName: {
+            type: DT.STRING,
+            notEmpty: true,
+        },
+        lastName: {
+            type: DT.STRING,
+            notEmpty: true,
+        },
+        displayName: {
+            type: DT.STRING,
+            allowNull: true,
+        },
+        about: {
+            type: DT.STRING,
+        },
+        last_login: {
+            type: DT.DATE,
+        }
+    });
+    User.associate = function(models) {
+        models.User.hasMany(models.Item);
+    }
+    return User;
 }
+
+
